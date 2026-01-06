@@ -93,8 +93,14 @@
 
           <!-- Buttons -->
           <div class="flex flex-row gap-4 w-full justify-center items-center mt-4">
-            <button type="button" class="btn-warning w-1/2">Sign Up</button>
-            <button type="submit" class="btn-primary w-1/2">Log In</button>
+            <button type="button" class="btn-warning w-1/2" routerLink="/register">Sign Up</button>
+            <button type="submit" class="btn-primary w-1/2" [disabled]="isLoading">
+              @if (isLoading) {
+                <span>Logging in...</span>
+              } @else {
+                <span>Log In</span>
+              }
+            </button>
           </div>
 
           <!-- Divider -->
@@ -215,8 +221,14 @@
 
       <!-- Buttons -->
       <div class="flex flex-row gap-4 w-full justify-center items-center mt-4">
-        <button type="button" class="btn-warning w-1/2">Sign Up</button>
-        <button type="submit" class="btn-primary w-1/2">Log In</button>
+        <button type="button" class="btn-warning w-1/2" routerLink="/register">Sign Up</button>
+        <button type="submit" class="btn-primary w-1/2" [disabled]="isLoading">
+          @if (isLoading) {
+            <span>Logging in...</span>
+          } @else {
+            <span>Log In</span>
+          }
+        </button>
       </div>
 
       <!-- Divider -->

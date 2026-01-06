@@ -8,10 +8,13 @@ import { StudentSubmissionPages } from './my-classes-pages/detail-my-classes-pag
 import { MyNotificationPages } from './my-notification-pages/my-notification-pages';
 import { MyProfilePages } from './my-profile-pages/my-profile-pages';
 import { ReportPages } from './report-pages/report-pages';
+import { authGuard, roleGuard } from '../../guards/auth.guard';
+
 export const TEACHER_ROUTE: Routes = [
   {
     path: 'teacher',
     component: DashboardLayout,
+    canActivate: [authGuard, roleGuard('teacher')],
     children: [
       { path: 'dashboard', component: DashboardTeacherPages },
       { path: 'my-classes', component: MyClassesPages },

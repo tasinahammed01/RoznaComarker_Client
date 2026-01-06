@@ -1,1 +1,307 @@
-<p>register-pages works!</p>
+<ng-container>
+  @if(device.isDesktop()) {
+  <div class="min-h-screen bg-[#F3F3F3] flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+      <div
+        class="bg-white rounded-[30px] border-4 border-[#E2E2E2] shadow-[0px_10px_0_#E2E2E2] p-8"
+      >
+        <div class="text-center mb-8">
+          <div class="flex justify-center items-center gap-2">
+            <img src="img/logo.png" class="w-10" alt="Logo" />
+            <p class="text-3xl font-bold text-[#3F3A3A]">RoznaHub</p>
+          </div>
+          <p class="text-[#595959] mt-4">Create Your Account</p>
+        </div>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-3">
+          <!-- Role -->
+          <div class="flex flex-col gap-1">
+            <label for="role" class="text-sm font-bold pl-2">Select Your Role</label>
+            <div class="relative">
+              <select
+                id="role"
+                formControlName="role"
+                class="input-text appearance-none pr-10 cursor-pointer"
+                required
+              >
+                <option value="" disabled selected>Select Your Role</option>
+                <option value="teacher">Teacher</option>
+                <option value="student">Student</option>
+              </select>
+              <i
+                class="bx bx-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none text-2xl"
+              ></i>
+            </div>
+          </div>
+
+          <!-- Display Name -->
+          <div class="flex flex-col gap-1">
+            <label for="displayName" class="text-sm font-bold pl-2">Full Name</label>
+            <input
+              type="text"
+              id="displayName"
+              formControlName="displayName"
+              class="input-text"
+              placeholder="Enter your full name"
+              required
+              aria-label="Full Name"
+            />
+          </div>
+
+          <!-- Email -->
+          <div class="flex flex-col gap-1">
+            <label for="email" class="text-sm font-bold pl-2">Email</label>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              class="input-text"
+              placeholder="Enter your email"
+              required
+              aria-label="Email"
+            />
+          </div>
+
+          <!-- Password -->
+          <div class="flex flex-col gap-1">
+            <label for="password" class="text-sm font-bold pl-2">Password</label>
+            <div class="relative">
+              <input
+                [type]="showPassword ? 'text' : 'password'"
+                id="password"
+                formControlName="password"
+                class="input-text"
+                placeholder="Enter your password"
+                required
+                aria-label="Password"
+              />
+              <button
+                type="button"
+                (click)="togglePassword()"
+                class="absolute inset-y-0 right-3 pr-3 flex items-center text-gray-500"
+                aria-label="Toggle password visibility"
+              >
+                <i class="bx text text-2xl" [ngClass]="showPassword ? 'bx-show' : 'bx-hide'"></i>
+              </button>
+            </div>
+            @if (registerForm.get('password')?.hasError('minlength')) {
+              <p class="text-xs text-red-500 pl-2">Password must be at least 6 characters</p>
+            }
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="flex flex-col gap-1">
+            <label for="confirmPassword" class="text-sm font-bold pl-2">Confirm Password</label>
+            <div class="relative">
+              <input
+                [type]="showConfirmPassword ? 'text' : 'password'"
+                id="confirmPassword"
+                formControlName="confirmPassword"
+                class="input-text"
+                placeholder="Confirm your password"
+                required
+                aria-label="Confirm Password"
+              />
+              <button
+                type="button"
+                (click)="toggleConfirmPassword()"
+                class="absolute inset-y-0 right-3 pr-3 flex items-center text-gray-500"
+                aria-label="Toggle password visibility"
+              >
+                <i class="bx text text-2xl" [ngClass]="showConfirmPassword ? 'bx-show' : 'bx-hide'"></i>
+              </button>
+            </div>
+            @if (registerForm.get('confirmPassword')?.hasError('passwordMismatch')) {
+              <p class="text-xs text-red-500 pl-2">Passwords do not match</p>
+            }
+          </div>
+
+          <!-- Buttons -->
+          <div class="flex flex-row gap-4 w-full justify-center items-center mt-4">
+            <button type="button" class="btn-warning w-1/2" routerLink="/login">Back to Login</button>
+            <button type="submit" class="btn-primary w-1/2" [disabled]="isLoading">
+              @if (isLoading) {
+                <span>Creating Account...</span>
+              } @else {
+                <span>Sign Up</span>
+              }
+            </button>
+          </div>
+
+          <!-- Divider -->
+          <div class="relative flex items-center my-6">
+            <div class="grow border-t border-gray-300"></div>
+            <span class="shrink-0 mx-4 text-gray-500 text-base">Or continue with</span>
+            <div class="grow border-t border-gray-300"></div>
+          </div>
+
+          <!-- Social buttons -->
+          <div class="flex flex-row justify-center gap-3">
+            <div
+              class="w-16 h-16 rounded-2xl flex items-center justify-center border-2 border-gray-100 cursor-pointer hover: bg-[#F3F3F3]"
+            >
+              <img src="icons/ic_google.svg" alt="Google" />
+            </div>
+            <div
+              class="w-16 h-16 rounded-2xl flex items-center justify-center border-2 border-gray-100 cursor-pointer hover: bg-[#F3F3F3]"
+            >
+              <img src="icons/ic_apple.svg" alt="Apple" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  }
+</ng-container>
+
+<ng-container>
+  @if(device.isMobile() || device.isTablet()) {
+  <div class="min-h-screen bg-white flex flex-col items-center justify-center p-4">
+    <div class="text-center mb-8">
+      <div class="flex justify-center items-center gap-2">
+        <img src="img/logo.png" class="w-10" alt="Logo" />
+        <p class="text-3xl font-bold text-[#3F3A3A]">RoznaHub</p>
+      </div>
+      <p class="text-[#595959] mt-4">Create Your Account</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-3 w-full px-6">
+      <!-- Role -->
+      <div class="flex flex-col gap-1">
+        <label for="role" class="text-sm font-bold pl-2">Select Your Role</label>
+        <div class="relative">
+          <select
+            id="role"
+            formControlName="role"
+            class="input-text appearance-none pr-10 cursor-pointer"
+            required
+          >
+            <option value="" disabled selected>Select Your Role</option>
+            <option value="teacher">Teacher</option>
+            <option value="student">Student</option>
+          </select>
+          <i
+            class="bx bx-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none text-2xl"
+          ></i>
+        </div>
+      </div>
+
+      <!-- Display Name -->
+      <div class="flex flex-col gap-1">
+        <label for="displayName" class="text-sm font-bold pl-2">Full Name</label>
+        <input
+          type="text"
+          id="displayName"
+          formControlName="displayName"
+          class="input-text"
+          placeholder="Enter your full name"
+          required
+          aria-label="Full Name"
+        />
+      </div>
+
+      <!-- Email -->
+      <div class="flex flex-col gap-1">
+        <label for="email" class="text-sm font-bold pl-2">Email</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="input-text"
+          placeholder="Enter your email"
+          required
+          aria-label="Email"
+        />
+      </div>
+
+      <!-- Password -->
+      <div class="flex flex-col gap-1">
+        <label for="password" class="text-sm font-bold pl-2">Password</label>
+        <div class="relative">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            formControlName="password"
+            class="input-text"
+            placeholder="Enter your password"
+            required
+            aria-label="Password"
+          />
+          <button
+            type="button"
+            (click)="togglePassword()"
+            class="absolute inset-y-0 right-3 pr-3 flex items-center text-gray-500"
+            aria-label="Toggle password visibility"
+          >
+            <i class="bx text text-2xl" [ngClass]="showPassword ? 'bx-show' : 'bx-hide'"></i>
+          </button>
+        </div>
+        @if (registerForm.get('password')?.hasError('minlength')) {
+          <p class="text-xs text-red-500 pl-2">Password must be at least 6 characters</p>
+        }
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="flex flex-col gap-1">
+        <label for="confirmPassword" class="text-sm font-bold pl-2">Confirm Password</label>
+        <div class="relative">
+          <input
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            class="input-text"
+            placeholder="Confirm your password"
+            required
+            aria-label="Confirm Password"
+          />
+          <button
+            type="button"
+            (click)="toggleConfirmPassword()"
+            class="absolute inset-y-0 right-3 pr-3 flex items-center text-gray-500"
+            aria-label="Toggle password visibility"
+          >
+            <i class="bx text text-2xl" [ngClass]="showConfirmPassword ? 'bx-show' : 'bx-hide'"></i>
+          </button>
+        </div>
+        @if (registerForm.get('confirmPassword')?.hasError('passwordMismatch')) {
+          <p class="text-xs text-red-500 pl-2">Passwords do not match</p>
+        }
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex flex-row gap-4 w-full justify-center items-center mt-4">
+        <button type="button" class="btn-warning w-1/2" routerLink="/login">Back to Login</button>
+        <button type="submit" class="btn-primary w-1/2" [disabled]="isLoading">
+          @if (isLoading) {
+            <span>Creating Account...</span>
+          } @else {
+            <span>Sign Up</span>
+          }
+        </button>
+      </div>
+
+      <!-- Divider -->
+      <div class="relative flex items-center my-6">
+        <div class="grow border-t border-gray-300"></div>
+        <span class="shrink-0 mx-4 text-gray-500 text-base">Or continue with</span>
+        <div class="grow border-t border-gray-300"></div>
+      </div>
+
+      <!-- Social buttons -->
+      <div class="flex flex-row justify-center gap-3">
+        <div
+          class="w-16 h-16 rounded-2xl flex items-center justify-center border-2 border-gray-100 cursor-pointer hover: bg-[#F3F3F3]"
+        >
+          <img src="icons/ic_google.svg" alt="Google" />
+        </div>
+        <div
+          class="w-16 h-16 rounded-2xl flex items-center justify-center border-2 border-gray-100 cursor-pointer hover: bg-[#F3F3F3]"
+        >
+          <img src="icons/ic_apple.svg" alt="Apple" />
+        </div>
+      </div>
+    </form>
+  </div>
+  }
+</ng-container>
