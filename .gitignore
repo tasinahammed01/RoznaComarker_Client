@@ -9,6 +9,9 @@
 
 .env
 
+# Firebase config (contains sensitive credentials)
+src/app/firebase.config.ts
+
 # Node
 /node_modules
 npm-debug.log
